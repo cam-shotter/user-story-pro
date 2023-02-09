@@ -1,0 +1,8 @@
+{
+	"/": [],
+	"/about": [],
+	"/products": [],
+	"/products/product": [
+		"src/routes/products/product/+page.ts"
+	]
+}
