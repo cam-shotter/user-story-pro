@@ -49,22 +49,29 @@ function localStorageStore(key, initialValue, options) {
 }
 const storePrefersDarkScheme = localStorageStore("storePrefersDarkScheme", false);
 const storeLightSwitch = localStorageStore("storeLightSwitch", void 0);
-const AccordionItem_svelte_svelte_type_style_lang = "";
-const cBase$1 = "flex items-center";
-const cLead = "flex-none flex justify-between items-center";
-const cCenter = "flex-auto";
-const cTrail = "flex-none flex items-center space-x-4";
+const cBase$1 = "flex flex-col space-y-4";
+const cRowMain = "grid items-center";
+const cRowHeadline = "";
+const cSlotLead = "flex-none flex justify-between items-center";
+const cSlotDefault = "flex-auto";
+const cSlotTrail = "flex-none flex items-center space-x-4";
 const AppBar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let classesBase;
-  let classesLead;
-  let classesCenter;
-  let classesTrail;
+  let classesRowMain;
+  let classesRowHeadline;
+  let classesSlotLead;
+  let classesSlotDefault;
+  let classesSlotTrail;
   let $$slots = compute_slots(slots);
   let { background = "bg-surface-100-800-token" } = $$props;
   let { border = "" } = $$props;
   let { padding = "p-4" } = $$props;
-  let { shadow = "shadow-lg" } = $$props;
-  let { space = "space-x-4" } = $$props;
+  let { shadow = "" } = $$props;
+  let { spacing = "space-y-4" } = $$props;
+  let { gridColumns = "grid-cols-[auto_1fr_auto]" } = $$props;
+  let { gap = "gap-4" } = $$props;
+  let { regionRowMain = "" } = $$props;
+  let { regionRowHeadline = "" } = $$props;
   let { slotLead = "" } = $$props;
   let { slotDefault = "" } = $$props;
   let { slotTrail = "" } = $$props;
@@ -78,8 +85,16 @@ const AppBar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.padding(padding);
   if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
     $$bindings.shadow(shadow);
-  if ($$props.space === void 0 && $$bindings.space && space !== void 0)
-    $$bindings.space(space);
+  if ($$props.spacing === void 0 && $$bindings.spacing && spacing !== void 0)
+    $$bindings.spacing(spacing);
+  if ($$props.gridColumns === void 0 && $$bindings.gridColumns && gridColumns !== void 0)
+    $$bindings.gridColumns(gridColumns);
+  if ($$props.gap === void 0 && $$bindings.gap && gap !== void 0)
+    $$bindings.gap(gap);
+  if ($$props.regionRowMain === void 0 && $$bindings.regionRowMain && regionRowMain !== void 0)
+    $$bindings.regionRowMain(regionRowMain);
+  if ($$props.regionRowHeadline === void 0 && $$bindings.regionRowHeadline && regionRowHeadline !== void 0)
+    $$bindings.regionRowHeadline(regionRowHeadline);
   if ($$props.slotLead === void 0 && $$bindings.slotLead && slotLead !== void 0)
     $$bindings.slotLead(slotLead);
   if ($$props.slotDefault === void 0 && $$bindings.slotDefault && slotDefault !== void 0)
@@ -90,18 +105,21 @@ const AppBar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.label(label);
   if ($$props.labelledby === void 0 && $$bindings.labelledby && labelledby !== void 0)
     $$bindings.labelledby(labelledby);
-  classesBase = `${cBase$1} ${background} ${border} ${padding} ${shadow} ${space} ${$$props.class ?? ""}`;
-  classesLead = `${cLead} ${slotLead}`;
-  classesCenter = `${cCenter} ${slotDefault}`;
-  classesTrail = `${cTrail} ${slotTrail}`;
+  classesBase = `${cBase$1} ${background} ${border} ${spacing} ${padding} ${shadow} ${$$props.class ?? ""}`;
+  classesRowMain = `${cRowMain} ${gridColumns} ${gap} ${regionRowMain}`;
+  classesRowHeadline = `${cRowHeadline} ${regionRowHeadline}`;
+  classesSlotLead = `${cSlotLead} ${slotLead}`;
+  classesSlotDefault = `${cSlotDefault} ${slotDefault}`;
+  classesSlotTrail = `${cSlotTrail} ${slotTrail}`;
   return `<div class="${"app-bar " + escape(classesBase, true)}" data-testid="${"app-bar"}" role="${"toolbar"}"${add_attribute("aria-label", label, 0)}${add_attribute("aria-labelledby", labelledby, 0)}>
-	${$$slots.lead ? `<div class="${"app-bar-lead " + escape(classesLead, true)}">${slots.lead ? slots.lead({}) : ``}</div>` : ``}
-
+	<div class="${"app-bar-row-main " + escape(classesRowMain, true)}">
+		${$$slots.lead ? `<div class="${"app-bar-slot-lead " + escape(classesSlotLead, true)}">${slots.lead ? slots.lead({}) : ``}</div>` : ``}
+		
+		<div class="${"app-bar-slot-default " + escape(classesSlotDefault, true)}">${slots.default ? slots.default({}) : ``}</div>
+		
+		${$$slots.trail ? `<div class="${"app-bar-slot-trail " + escape(classesSlotTrail, true)}">${slots.trail ? slots.trail({}) : ``}</div>` : ``}</div>
 	
-	<div class="${"app-bar-center " + escape(classesCenter, true)}">${slots.default ? slots.default({}) : ``}</div>
-
-	
-	${$$slots.trail ? `<div class="${"app-bar-trail " + escape(classesTrail, true)}">${slots.trail ? slots.trail({}) : ``}</div>` : ``}</div>`;
+	${$$slots.headline ? `<div class="${"app-bar-row-headline " + escape(classesRowHeadline, true)}">${slots.headline ? slots.headline({}) : ``}</div>` : ``}</div>`;
 });
 const cBaseAppShell = "w-full h-full flex flex-col overflow-hidden";
 const cContentArea = "w-full h-full flex overflow-hidden";
@@ -118,6 +136,7 @@ const AppShell = create_ssr_component(($$result, $$props, $$bindings, slots) => 
   let classesPageFooter;
   let classesFooter;
   let $$slots = compute_slots(slots);
+  let { regionPage = "" } = $$props;
   let { slotHeader = "z-10" } = $$props;
   let { slotSidebarLeft = "w-auto" } = $$props;
   let { slotSidebarRight = "w-auto" } = $$props;
@@ -125,6 +144,8 @@ const AppShell = create_ssr_component(($$result, $$props, $$bindings, slots) => 
   let { slotPageContent = "" } = $$props;
   let { slotPageFooter = "" } = $$props;
   let { slotFooter = "" } = $$props;
+  if ($$props.regionPage === void 0 && $$bindings.regionPage && regionPage !== void 0)
+    $$bindings.regionPage(regionPage);
   if ($$props.slotHeader === void 0 && $$bindings.slotHeader && slotHeader !== void 0)
     $$bindings.slotHeader(slotHeader);
   if ($$props.slotSidebarLeft === void 0 && $$bindings.slotSidebarLeft && slotSidebarLeft !== void 0)
@@ -155,7 +176,7 @@ const AppShell = create_ssr_component(($$result, $$props, $$bindings, slots) => 
 		${$$slots.sidebarLeft ? `<aside id="${"sidebar-left"}"${add_attribute("class", classesSidebarLeft, 0)}>${slots.sidebarLeft ? slots.sidebarLeft({}) : ``}</aside>` : ``}
 
 		
-		<div id="${"page"}"${add_attribute("class", cPage, 0)}>
+		<div id="${"page"}" class="${escape(regionPage, true) + " " + escape(cPage, true)}">
 			${$$slots.pageHeader ? `<header id="${"page-header"}" class="${"flex-none " + escape(classesPageHeader, true)}">${slots.pageHeader ? slots.pageHeader({}) : `(slot:header)`}</header>` : ``}
 
 			
@@ -174,18 +195,28 @@ let cBase = "flex aspect-square text-surface-50 font-semibold justify-center ite
 let cImage = "w-full h-full object-cover";
 const Avatar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let classesBase;
-  let { background = "bg-surface-400-500-token" } = $$props;
-  let { width = "w-12" } = $$props;
-  let { border = "" } = $$props;
-  let { rounded = "rounded-full" } = $$props;
-  let { shadow = "" } = $$props;
-  let { cursor = "" } = $$props;
   let { initials = "AB" } = $$props;
   let { fill = "fill-token" } = $$props;
   let { src = "" } = $$props;
   let { action = () => {
   } } = $$props;
   let { actionParams = "" } = $$props;
+  let { background = "bg-surface-400-500-token" } = $$props;
+  let { width = "w-12" } = $$props;
+  let { border = "" } = $$props;
+  let { rounded = "rounded-full" } = $$props;
+  let { shadow = "" } = $$props;
+  let { cursor = "" } = $$props;
+  if ($$props.initials === void 0 && $$bindings.initials && initials !== void 0)
+    $$bindings.initials(initials);
+  if ($$props.fill === void 0 && $$bindings.fill && fill !== void 0)
+    $$bindings.fill(fill);
+  if ($$props.src === void 0 && $$bindings.src && src !== void 0)
+    $$bindings.src(src);
+  if ($$props.action === void 0 && $$bindings.action && action !== void 0)
+    $$bindings.action(action);
+  if ($$props.actionParams === void 0 && $$bindings.actionParams && actionParams !== void 0)
+    $$bindings.actionParams(actionParams);
   if ($$props.background === void 0 && $$bindings.background && background !== void 0)
     $$bindings.background(background);
   if ($$props.width === void 0 && $$bindings.width && width !== void 0)
@@ -198,20 +229,9 @@ const Avatar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.shadow(shadow);
   if ($$props.cursor === void 0 && $$bindings.cursor && cursor !== void 0)
     $$bindings.cursor(cursor);
-  if ($$props.initials === void 0 && $$bindings.initials && initials !== void 0)
-    $$bindings.initials(initials);
-  if ($$props.fill === void 0 && $$bindings.fill && fill !== void 0)
-    $$bindings.fill(fill);
-  if ($$props.src === void 0 && $$bindings.src && src !== void 0)
-    $$bindings.src(src);
-  if ($$props.action === void 0 && $$bindings.action && action !== void 0)
-    $$bindings.action(action);
-  if ($$props.actionParams === void 0 && $$bindings.actionParams && actionParams !== void 0)
-    $$bindings.actionParams(actionParams);
   classesBase = `${cBase} ${background} ${width} ${border} ${rounded} ${shadow} ${cursor} ${$$props.class ?? ""}`;
-  return `<figure class="${"avatar " + escape(classesBase, true)}" data-testid="${"avatar"}">${src ? `<img class="${"avatar-image " + escape(cImage, true)}"${add_attribute("src", src, 0)}${add_attribute("alt", $$props.alt || "", 0)}>` : `<svg class="${"avatar-initials w-full h-full"}" viewBox="${"0 0 512 512"}"><text x="${"50%"}" y="${"50%"}" text-anchor="${"middle"}" dominant-baseline="${"middle"}" font-weight="${"bold"}"${add_attribute("font-size", 150, 0)} class="${"avatar-text " + escape(fill, true)}">${escape(String(initials).substring(0, 2).toUpperCase())}</text></svg>`}</figure>`;
+  return `<figure class="${"avatar " + escape(classesBase, true)}" data-testid="${"avatar"}">${src ? `<img class="${"avatar-image " + escape(cImage, true)}"${add_attribute("style", $$props.style ?? "", 0)}${add_attribute("src", src, 0)}${add_attribute("alt", $$props.alt || "", 0)}>` : `<svg class="${"avatar-initials w-full h-full"}" viewBox="${"0 0 512 512"}"><text x="${"50%"}" y="${"50%"}" dominant-baseline="${"middle"}" text-anchor="${"middle"}" font-weight="${"bold"}"${add_attribute("font-size", 150, 0)} class="${"avatar-text " + escape(fill, true)}">${escape(String(initials).substring(0, 2).toUpperCase())}</text></svg>`}</figure>`;
 });
-const FileDropzone_svelte_svelte_type_style_lang = "";
 const ProgressBar_svelte_svelte_type_style_lang = "";
 const cTrack = "inline-block bg-surface-200-700-token ring-[1px] ring-surface-300-600-token ring-inset w-12 h-6 rounded-full cursor-pointer transition-all duration-[100ms]";
 const cThumb = "bg-white dark:bg-black fill-white dark:fill-black w-6 h-6 flex justify-center items-center rounded-full shadow-lg transition-all duration-[100ms] scale-90";
