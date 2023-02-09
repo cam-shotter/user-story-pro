@@ -5,7 +5,11 @@ const config = {
 		require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
 	],
 	theme: {
-		extend: {}
+		extend: {
+			gridTemplateColumns: {
+				'ram': 'repeat(auto-fit, minmax(240px, 1fr))',
+			}
+		}
 	},
 	plugins: [...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')()]
 };
