@@ -103,31 +103,34 @@
 
     <section class="card p-4 m-4 gap-8">
         <h3>Current prompt:</h3>
-        <strong>Template:</strong>
-        <code>
-            {`Product: <product description>
-            Feature: <feature description>
-            User Type: <user type>
+        <div>
+            <strong>Template:</strong>
+            <code>
+                {`Product: <product description>
+                Feature: <feature description>
+                User Type: <user type>
 
-            Generate multiple user stories based on the above information while following the INVEST principles.
+                Generate multiple user stories based on the above information while following the INVEST principles.
 
-            User Story Template:
-            As a <user type>, I want to <action>, So that <outcome>
+                User Story Template:
+                As a <user type>, I want to <action>, So that <outcome>
 
-            Acceptance Criteria Template:
-            Given <starting conditions>, When <action>, Then <outcome>
+                Acceptance Criteria Template:
+                Given <starting conditions>, When <action>, Then <outcome>
 
-            Test Case Template:
-            Test case <test number>
-            - Input: <input conditions>
-            - Action: <action taken>
-            - Expected Output: <expected outcome>
+                Test Case Template:
+                Test case <test number>
+                - Input: <input conditions>
+                - Action: <action taken>
+                - Expected Output: <expected outcome>
 
-            Note: Make sure each item generated follows the INVEST principles.`}
-        </code>
-
-        <strong>Prompt:</strong>
-        <p>{prompt}</p>
+                Note: Make sure each item generated follows the INVEST principles.`}
+            </code>
+        </div>
+        <div>
+            <strong>Prompt:</strong>
+            <p>{prompt}</p>
+        </div>
     </section>
 </main>
 
